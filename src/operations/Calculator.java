@@ -17,6 +17,7 @@ public class Calculator {
 	private Scanner scanner = new Scanner(System.in);
 	private int result;
 	boolean exceptionCheck = false;
+	boolean validChoiceCheck = false;
 
 	public void getNumbersFromUser() {
 		System.out.print("Enter number1: ");
@@ -38,10 +39,12 @@ public class Calculator {
 
 		// Getting choice from user and keep trying if choice is not between 1-4
 		// If user enters invalid input
-		while (!getChoice()) {
-			getChoice();
+		this.validChoiceCheck = getChoice(); 
+		if(this.exceptionCheck) {
+			System.out.println("Something wwnt wrong please restart application");
+		}else if(!this.validChoiceCheck) {
+			System.out.println("Please restart application and enter valid option from 1-4 only");
 		}
-
 	}
 
 	/**
@@ -58,19 +61,19 @@ public class Calculator {
 		// Taking menu input from user
 		try {
 			menuChoice = scanner.nextInt();
-			this.exceptionCheck = false;
 			// Setting menuChoice
 			if (setChoice(menuChoice)) {
-				// Executing Choice and returning value
-				choiceExecution(this.menuChoice);
-				return true;
+					// Executing Choice and returning value
+					choiceExecution(this.menuChoice);
+					return true;
 			} else {
-				return false;
+					return false;
 			}
 		} catch (Exception e) {
-			System.out.println("Please enter a valid choice from 1 - 4");
+			this.exceptionCheck = true;
 			return false;
 		}
+		
 	}
 
 	/**
@@ -96,7 +99,6 @@ public class Calculator {
 			this.menuChoice = choice;
 			return true;
 		} else {
-			System.out.println("Please enter a valid choice from 1 - 4");
 			return false;
 		}
 	}
@@ -114,7 +116,10 @@ public class Calculator {
 	 * Method to print result
 	 */
 	public void printResult() {
-		System.out.println("\nResult is: " + this.result);
+		// Only print result if valid choice was selected
+		if(this.validChoiceCheck && !this.exceptionCheck) {
+			System.out.println("\nResult is: " + this.result);
+		}
 	}
 
 	/**
