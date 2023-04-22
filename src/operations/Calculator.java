@@ -8,7 +8,7 @@ import java.util.Scanner;
  * 
  * @author Manjeet Singh
  * @since 30 March,2023
- * @version 1.0
+ * @version 1.0.1
  */
 public class Calculator {
 	private int number1;
@@ -22,22 +22,22 @@ public class Calculator {
 		int number1 = 0;
 		int number2 = 0;
 		System.out.print("Enter number1: ");
-		// Taking input from user
+		// Taking first number from user
 		number1 = numberInput();
 		// Keep trying to get a valid number if invalid character was entered
-		while(this.exceptionCheck) {
+		while (this.exceptionCheck) {
 			System.out.print("Please Enter a valid number1: ");
-			// Taking input from user
+			// Taking input from user again
 			number1 = numberInput();
 		}
-		
+
 		System.out.print("Enter number2: ");
-		// Taking input from user
+		// Taking second number from user
 		number2 = numberInput();
 		// Keep trying to get a valid number if invalid character was entered
-		while(this.exceptionCheck) {
+		while (this.exceptionCheck) {
 			System.out.print("Please Enter a valid number2: ");
-			// Taking input from user
+			// Taking input from user again
 			number2 = numberInput();
 		}
 		// Setting numbers
@@ -49,12 +49,12 @@ public class Calculator {
 	 */
 	public void choiceSelection() {
 		// Checking if an exception was thrown while getting numbers from user
-		if(!this.exceptionCheck) {
+		if (!this.exceptionCheck) {
 			// If user enters invalid input
-			this.validChoiceCheck = getChoice(); 
-			if(this.exceptionCheck && !this.validChoiceCheck) {
+			this.validChoiceCheck = getChoice();
+			if (this.exceptionCheck && !this.validChoiceCheck) {
 				// Invalid character or option was entered and an exception was thrown
-				while(!this.validChoiceCheck) {
+				while (!this.validChoiceCheck) {
 					System.out.println("Please enter valid option from 1-4 only");
 					this.validChoiceCheck = getChoice();
 				}
@@ -65,7 +65,7 @@ public class Calculator {
 	/**
 	 * Method to get choice from user
 	 * 
-	 * @return
+	 * @return true for valid choice and false for invalid choice
 	 */
 	private boolean getChoice() {
 		// Printing menu
@@ -75,35 +75,39 @@ public class Calculator {
 		int menuChoice = 0;
 		// Taking menu input from user
 		menuChoice = numberInput();
-		
+
 		// Checking if an exception was thrown
-		if(!this.exceptionCheck) {
+		if (!this.exceptionCheck) {
 			if (setChoice(menuChoice)) {
 				// Executing Choice and returning value
 				choiceExecution(this.menuChoice);
 				return true;
-		}		
-		}else {
+			}
+		} else {
 			return false; // Returning false because an exception was thrown
 		}
 		return false;
 	}
-	
+
 	/**
 	 * This method gets number input from user
+	 * 
 	 * @return number input from user
 	 */
 	private int numberInput() {
 		int numberInput = 0;
-		Scanner scanner = new Scanner(System.in);
+
 		try {
+			Scanner scanner = new Scanner(System.in);
 			// Getting number input from user
 			numberInput = scanner.nextInt();
-			//scanner.close();
+			// No exception was thrown
 			this.exceptionCheck = false;
-		}catch(Exception e){
+		} catch (Exception e) {
+			// An exception was thrown
 			this.exceptionCheck = true;
 		}
+		// Returning user input
 		return numberInput;
 	}
 
@@ -115,17 +119,17 @@ public class Calculator {
 	 */
 	private void setNumbers(int number1, int number2) {
 		// Checking if an exception was thrown
-		if(!this.exceptionCheck) {
+		if (!this.exceptionCheck) {
 			this.number1 = number1;
 			this.number2 = number2;
 		}
 	}
 
 	/**
-	 * Method to set choice
+	 * Method to set choice only if it is valid
 	 * 
 	 * @param choice operation selected by user
-	 * @return boolean if selected choice is within 1 and 4
+	 * @return true if selected choice is within 1-4 and false it not within 1-4
 	 */
 	private boolean setChoice(int choice) {
 		// Checking if input was valid choice
@@ -133,6 +137,7 @@ public class Calculator {
 			this.menuChoice = choice;
 			return true;
 		} else {
+			// Invalid choice was selected
 			return false;
 		}
 	}
@@ -147,17 +152,17 @@ public class Calculator {
 	}
 
 	/**
-	 * Method to print result
+	 * Method to print result, only if valid choice was selected
 	 */
 	public void printResult() {
 		// Only print result if valid choice was selected
-		if(this.validChoiceCheck && !this.exceptionCheck) {
+		if (this.validChoiceCheck && !this.exceptionCheck) {
 			System.out.println("\nResult is: " + this.result);
 		}
 	}
 
 	/**
-	 * Method to print menu options
+	 * Method to print available choices for mathematical operations
 	 */
 	private void printMenu() {
 		System.out.println("1 - Add");
@@ -167,7 +172,7 @@ public class Calculator {
 	}
 
 	/**
-	 * Method for execution according to user choice
+	 * Method for operation execution according to user choice
 	 * 
 	 * @param choice operation selected by user
 	 */
@@ -186,7 +191,7 @@ public class Calculator {
 	/**
 	 * Method for adding two numbers
 	 * 
-	 * @return sum of number1 and number2
+	 * @return sum of first and second number given by user
 	 */
 	private int addition() {
 		int addedNumbers = number1 + number2;

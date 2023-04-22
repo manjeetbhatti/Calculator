@@ -1,7 +1,8 @@
 package operations;
 
 /**
- * This class will launch the application
+ * This class will launch the calculator application
+ * 
  * @author Manjeet Singh
  * @since 30 March,2023
  * @version 1.0
